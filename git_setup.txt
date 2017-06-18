@@ -6,10 +6,23 @@ git status
 
 git commit
 git commit -m ""
+git push
 
-git pushgit pushgit push
+
+
+
+git config --global alias.s status
+git config --global alias.a add
+git config --global alias.c commit -m
+git config --global alias.p push
+
+git config --global push.default simple
+
 
 
 кешування даних (логіна і пароля)
 git config credential.helper store
+
+git config --global user.name alahesia
+git config --global user.email alahesia@gmail.com
 
