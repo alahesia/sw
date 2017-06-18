@@ -3,6 +3,7 @@ Smart Home on Raspberry Pi
 
 
 #convert py to pyc
+=====================
 ```python
 nano pyc.py
 
