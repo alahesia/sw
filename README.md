@@ -1,5 +1,5 @@
 # sw
-Smart Home on Raspberry Pi
+Smart Home on Raspberry Pi 3
 
 
 Convert py to pyc
@@ -32,3 +32,15 @@ gpio read <pin>
 ```
 
 Link: <http://wiringpi.com/the-gpio-utility/>
+
+
+Git about README
+=====================
+> h1 =====================
+> h2 -----------------------------------
+
+p1
+***
+p2
+
+Link: <http://webdesign.ru.net/article/pravila-oformleniya-fayla-readmemd-na-github.html>
