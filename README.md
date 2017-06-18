@@ -2,7 +2,7 @@
 Smart Home on Raspberry Pi
 
 
-#convert py to pyc
+Ñonvert **py** to **pyc***
 =====================
 ```python
 nano pyc.py
@@ -14,7 +14,18 @@ python pyc.py
 ```
 or
 
+```python
 python -m compileall Read.py
 python -m compileall Read.py Read2.py
-
+```
 Link: <https://stackoverflow.com/posts/38426786/revisions>
+
+GPIO on console
+=====================
+```bash
+gpio readall
+gpio mode <pin> in/out
+
+gpio write <pin> 0/1
+gpio read <pin>
+```
