@@ -1,0 +1,32 @@
+Pin name Pin
+
+SDA --> 24
+SCK --> 23
+MOSI --> 19
+MISO --> 21
+GND --> 6
+RST --> 22
+3.3V --> 1
+
+sudo raspi-config
+Interfacing Options->SPI->Enabled
+
+or
+
+sudo nano /boot/config.txt
+dtparam=spi=on
+
+sudo reboot
+
+sudo apt-get install python2.7-dev
+
+git clone https://github.com/lthiery/SPI-Py.git
+sudo python SPI-Py/setup.py install
+
+git clone https://github.com/mxgxw/MFRC522-python.git
+cd MFRC522-python
+python Read.py
+
+
+
+http://www.instructables.com/id/Raspberry-Pi-3-Model-B-MIFARE-RC522-RFID-Tag-Readi/

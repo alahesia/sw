@@ -1,0 +1,15 @@
+git clone https://github.com/alahesia/sw
+cd sw
+
+git add .
+git status
+
+git commit
+git commit -m ""
+
+git pushgit pushgit push
+
+
+кешування даних (логіна і пароля)
+git config credential.helper store
+
