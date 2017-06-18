@@ -7,6 +7,7 @@ import MFRC522
 
 card_01 = '1364147152'
 
+url = 'http://test.q1q2.net/1/index.php'
 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
@@ -14,6 +15,15 @@ GPIO.setwarnings(False)
 MIFAREReader = MFRC522.MFRC522()
  
 while True:
+
+  f = urllib2.urlopen(url)
+  result = f.read()  
+  print (result)
+  f.close()
+
+  f = open('json.txt', 'w')
+  f.write(result)
+  f.close()
  
   #start RFID
   (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
