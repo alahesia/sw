@@ -1,9 +1,8 @@
-from RPi.GPIO import setmode, BOARD, setwarnings, setup, output, input as i, OUT, IN
+from RPi.GPIO import setmode, BOARD, setwarnings, setup, output as o, input as i, OUT, IN
 
 setmode(BOARD)
 setwarnings(False)
 
-setup(37,IN)
+setup(31,OUT)
 
-
-print i(37)
+o(31 ,1)

@@ -2,7 +2,7 @@ from os import path, remove
 from urllib2 import urlopen
 from json import loads, dumps
 from subprocess import Popen, PIPE
-from RPi.GPIO import setmode, BOARD, setwarnings, setup, output, input as i, OUT, IN
+from RPi.GPIO import setmode, BOARD, setwarnings, setup, output as o, input as i, OUT, IN
 from time import sleep
 
 #import math
@@ -121,29 +121,23 @@ while q:
 
 	print result
 
-	sleep(1)
+
+	result = loads(result)
+	status = result['status']
+
+	for (pin, s) in status.items():
+		o(int(pin),s)
+		#print pin + ' ' + str(s)
+
+	sleep(0.1)
 
 '''
 card_01 = '1364147152'
-
-url = 'http://test.q1q2.net/1/index.php'
-
-GPIO.setmode(GPIO.BOARD)
-GPIO.setwarnings(False)
 
 MIFAREReader = MFRC522.MFRC522()
  
 while True:
 
-  f = urlopen(url)
-  result = f.read()  
-  print (result)
-  f.close()
-
-  f = open('json.txt', 'w')
-  f.write(result)
-  f.close()
- 
   #start RFID
   (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
 
@@ -160,7 +154,6 @@ while True:
     	print "error"
   # end RFID
 
-  time.sleep(1) 
 
 GPIO.cleanup()
 '''
