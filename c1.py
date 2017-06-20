@@ -16,14 +16,14 @@ MIFAREReader = MFRC522.MFRC522()
  
 while True:
 
-  f = urllib2.urlopen(url)
-  result = f.read()  
-  print (result)
-  f.close()
+  #f = urllib2.urlopen(url)
+  #result = f.read()  
+  #print (result)
+  #f.close()
 
-  f = open('json.txt', 'w')
-  f.write(result)
-  f.close()
+  #f = open('json.txt', 'w')
+  #f.write(result)
+  #f.close()
  
   #start RFID
   (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
@@ -36,9 +36,9 @@ while True:
     print UIDcode
     
     if UIDcode == card_01:
-    	print "ok"
+      print "ok"
     else:
-    	print "error"
+      print "error"
   # end RFID
 
   time.sleep(1) 

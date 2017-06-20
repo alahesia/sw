@@ -1,1 +1,0 @@
-{"1":"gpio mode 21 out","2":"gpio mode 22 out","3":"gpio mode 23 out","4":"gpio mode 24 out","5":"gpio write 21 0","6":"gpio write 22 0","7":"gpio write 23 0","8":"gpio write 24 0"}
