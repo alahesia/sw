@@ -5,6 +5,9 @@ from subprocess import Popen, PIPE
 from RPi.GPIO import setmode, BOARD, setwarnings, setup, output as o, input as i, OUT, IN
 from time import sleep
 
+import dht11
+
+
 #import math
 #import MFRC522
 
@@ -66,7 +69,7 @@ while pin_T:
 
 		pins = loads(result)
 
-		if pins['i'] is None and pins['o'] is None :
+		if pins['i'] is None and pins['o'] is None and pins['t'] is None:
 			remove(patch)
 
 	else:
@@ -82,7 +85,7 @@ while pin_T:
 		result = loads(result)
 		pins = result['pins']
 
-	if pins['i'] is not None or pins['o'] is not None :
+	if pins['i'] is not None or pins['o'] is not None or pins['t'] is not None :
 		
 		file = dumps(pins)
 
@@ -103,6 +106,7 @@ for pin in pins['i']:
 for pin in pins['o']:
 	setup(pin,OUT)
 
+
 q = True
 while q:
 	pp = ''
@@ -110,8 +114,28 @@ while q:
 		#print i(pin)
 		pp = pp+'"'+str(pin)+'":'+str(i(pin))+','
 
+	for pin in pins['t']:
+		#humidity, temperature = Adafruit_DHT.read_retry(11, 22)
+		#t=temperature
+		#h=humidity
+
+		instance = dht11.DHT11(pin)
+		result = instance.read()
+
+		if result.is_valid():
+		    t = result.temperature
+		    h = result.humidity
+		else:
+		    t = '-'
+		    h = '-'
+
+		pp = pp+'"'+str(pin)+'":'+str(t)+','
+
+
+
+
 	pp = '{'+pp[0:-1]+'}'
-	#print pp
+	print pp
 	#http://91.202.240.29/?action=set_pins&token=abc123&pins={"37":1,"12":1}
 	url = baseurl+'set_pins&token='+token+'&pins='+pp
 
@@ -121,15 +145,42 @@ while q:
 
 	print result
 
-
 	result = loads(result)
+	
 	status = result['status']
-
 	for (pin, s) in status.items():
 		o(int(pin),s)
 		#print pin + ' ' + str(s)
 
-	sleep(0.1)
+	cmds = result['cmd']
+
+	if cmds is not None:
+		oo = ''
+		for cmd in cmds:
+			out = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE).stdout.read().split("\n")[0:-1]
+
+			l = ''
+			for line in out:
+				l = l + line + "%0A"	# %0D%0A
+
+			oo = oo + '"'+cmd+'":"'+l+'",'
+			print out
+
+		oo = '{'+oo[0:-1]+'}'
+
+		#print oo
+
+		url = baseurl + 'cmd_result&token='+token+'&cmd_id='+str(result['cmd_id'])+'&result='+oo
+		print url
+
+		f = urlopen(url)
+		result = f.read()  
+		f.close()
+		
+		print result
+
+
+	sleep(0.5)
 
 '''
 card_01 = '1364147152'
