@@ -34,6 +34,24 @@ gpio read <pin>
 Link: <http://wiringpi.com/the-gpio-utility/>
 
 
+Avtoload scritp on load Raspberry
+=====================
+```bash
+$ cd ~
+$ sudo nano c
+
+```bash
+#!/bin/bash
+python c2.py
+```
+
+```bash
+$ sudo nano .bashrc
+./c
+```
+
+
+
 Git about README
 =====================
 > h1 =====================
