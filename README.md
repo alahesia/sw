@@ -34,7 +34,7 @@ gpio read <pin>
 Link: <http://wiringpi.com/the-gpio-utility/>
 
 
-Avtoload scritp on load Raspberry
+Avtoload script on load Raspberry
 =====================
 ```bash
 $ cd ~
