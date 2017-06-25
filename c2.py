@@ -9,7 +9,7 @@ import dht11
 
 
 #import math
-#import MFRC522
+import MFRC522
 
 baseurl = 'http://test.q1q2.net/1/?action='
 
@@ -97,6 +97,28 @@ while pin_T:
 
 
 
+patch = 'rfids.txt'
+
+url = baseurl+'get_rfids&token='+token
+
+f = urlopen(url)
+result = f.read()  
+f.close()
+
+print result
+result = loads(result)
+		
+rfids = result['rfids']
+if rfids is not None:
+	file = dumps(rfids)
+
+	f = open(patch, 'w')
+	f.write(file)
+	f.close()
+
+#print rfids
+
+
 setmode(BOARD)
 setwarnings(False)
 
@@ -105,6 +127,10 @@ for pin in pins['i']:
 
 for pin in pins['o']:
 	setup(pin,OUT)
+
+
+#For RFIDS
+MIFAREReader = MFRC522.MFRC522()
 
 
 q = True
@@ -148,9 +174,13 @@ while q:
 	result = loads(result)
 	
 	status = result['status']
-	for (pin, s) in status.items():
-		o(int(pin),s)
-		#print pin + ' ' + str(s)
+	if result['guard']==0:
+		for (pin, s) in status.items():
+			o(int(pin),s)
+			#print pin + ' ' + str(s)
+	else:
+		for pin in pins['o']:
+			o(pin,0)
 
 	cmds = result['cmd']
 
@@ -182,29 +212,47 @@ while q:
 
 	sleep(0.5)
 
-'''
-card_01 = '1364147152'
+	
+	#start RFID
+	(status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
 
-MIFAREReader = MFRC522.MFRC522()
- 
-while True:
+	# Read UID
+	(status,uid) = MIFAREReader.MFRC522_Anticoll()
+	if status == MIFAREReader.MI_OK:
+		UIDcode = str(uid[0])+str(uid[1])+str(uid[2])+str(uid[3])
 
-  #start RFID
-  (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
+		print UIDcode
+		print rfids
 
-  # Read UID
-  (status,uid) = MIFAREReader.MFRC522_Anticoll()
-  if status == MIFAREReader.MI_OK:
-    UIDcode = str(uid[0])+str(uid[1])+str(uid[2])+str(uid[3])
+		#for f in frids:
+		#	print r
 
-    print UIDcode
-    
-    if UIDcode == card_01:
-    	print "ok"
-    else:
-    	print "error"
-  # end RFID
+		if int(UIDcode) in rfids:
+			print "rfid ok"
+
+			url = baseurl + 'upd_guard&token='+token
+
+			f = urlopen(url)
+			result = f.read()  
+			f.close()
+
+			#for pin in pins['o']:
+			#	o(pin,1)
+		else:
+			print "rfid error"
+			for pin in pins['o']:
+				o(pin,0)
+
+
+			url = baseurl + 'add_new_rfid&token='+token+'&cid='+UIDcode
+			print url
+
+			f = urlopen(url)
+			result = f.read()  
+			f.close()
+			
+			print result
+	# end RFID
 
 
 GPIO.cleanup()
-'''
