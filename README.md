@@ -39,7 +39,9 @@ Avtoload scritp on load Raspberry
 ```bash
 $ cd ~
 $ sudo nano c
+```
 
+Create bash file
 ```bash
 #!/bin/bash
 python c2.py
