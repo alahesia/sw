@@ -7,6 +7,7 @@ Convert py to pyc
 ```python
 nano pyc.py
 
+#!/usr/bin/python
 import py_compile 
 py_compile.compile('abc.py')
 
