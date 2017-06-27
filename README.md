@@ -55,6 +55,20 @@ $ sudo nano .bashrc
 
 
 
+KILL PID
+=====================
+```bash
+top
+ps -la  #pid only 1 users
+kill PID[ PID2 PID3]
+killall PIDNAME
+
+
+pstree #tree pid
+
+```
+
+
 Git about README
 =====================
 > h1 =====================
